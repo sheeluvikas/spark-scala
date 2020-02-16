@@ -24,5 +24,4 @@ object SparkFirst { // object are kind of static class
     fileRDD.collect().foreach(println)
 
   }
-
 }
