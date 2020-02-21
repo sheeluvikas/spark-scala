@@ -1,7 +1,11 @@
 package org.example.basics
 
+import java.io.InputStream
+
+import org.apache.avro.Schema
 import org.apache.spark.sql.{Row, SparkSession}
 import org.apache.spark.sql.types.{IntegerType, StringType, StructField, StructType}
+
 
 object DataFrameDemo {
 
@@ -34,8 +38,19 @@ object DataFrameDemo {
         .option("inferSchema", "true")
         .csv("src/main/resources/TechCrunchcontinentalUSA.csv")
 
+    val schemaStream: InputStream = getClass.getClassLoader.getResourceAsStream("userData1.avsc")
+    val avroSchema = new Schema.Parser().parse(schemaStream);
+    val df1 = spark.read
+      .format("com.databricks.spark.avro")
+      .option("avroSchema", avroSchema.toString)
+      .load("src/main/resources/userdata1.avro");
+
     df.printSchema()
     df.show(10)
+
+    print("*************** AVRO **************")
+    df1.printSchema()
+    df1.show()
 
 
   }
