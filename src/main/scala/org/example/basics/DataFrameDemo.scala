@@ -5,6 +5,7 @@ import java.io.InputStream
 import org.apache.avro.Schema
 import org.apache.spark.sql.{Row, SparkSession}
 import org.apache.spark.sql.types.{IntegerType, StringType, StructField, StructType}
+import org.apache.spark.sql.functions.{col, lit, when}
 
 
 object DataFrameDemo {
@@ -38,20 +39,27 @@ object DataFrameDemo {
         .option("inferSchema", "true")
         .csv("src/main/resources/TechCrunchcontinentalUSA.csv")
 
+    df.printSchema()
+    df.show(10)
+
+    /************************** Read from Avro schema *******************************/
+    print("*************** AVRO **************")
+
     val schemaStream: InputStream = getClass.getClassLoader.getResourceAsStream("userData1.avsc")
     val avroSchema = new Schema.Parser().parse(schemaStream);
-    val df1 = spark.read
+    val avroDF = spark.read
       .format("com.databricks.spark.avro")
       .option("avroSchema", avroSchema.toString)
       .load("src/main/resources/userdata1.avro");
 
-    df.printSchema()
-    df.show(10)
+    avroDF.printSchema()
+    avroDF.show()
 
-    print("*************** AVRO **************")
-    df1.printSchema()
-    df1.show()
-
+    val countryNameDF = avroDF.select(
+      col("country").cast(StringType).as("Country Name"),
+      lit(null).cast(StringType).as("Name")
+    )
+    print(countryNameDF.show())
 
   }
 }
