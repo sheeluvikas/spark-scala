@@ -47,7 +47,7 @@ object DataFrameDemo {
 
     val schemaStream: InputStream = getClass.getClassLoader.getResourceAsStream("userData1.avsc")
     val avroSchema = new Schema.Parser().parse(schemaStream);
-    val avroDF = spark.read
+        val avroDF = spark.read
       .format("com.databricks.spark.avro")
       .option("avroSchema", avroSchema.toString)
       .load("src/main/resources/userdata1.avro");

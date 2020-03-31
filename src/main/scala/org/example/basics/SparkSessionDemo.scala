@@ -1,8 +1,19 @@
 package org.example.basics
 
+import java.beans.Transient
+
+import org.apache.log4j.{LogManager, Logger}
 import org.apache.spark.sql.SparkSession // remember to have spark core and spark sql have same version
 
+/**
+ * This class explains the usage of sparkSession and getting the data from
+ * avro file, and creating a data frame, and then selecting one column as dataframe,
+ * and using that dataframe to create another avro file
+ */
 object SparkSessionDemo {
+
+  @Transient lazy val logger: Logger = LogManager.getLogger("SparkSessionDemo")
+
   def main(args: Array[String]): Unit = {
 
     val sparkSession = SparkSession.builder()
@@ -10,14 +21,19 @@ object SparkSessionDemo {
       .master("local")
       .getOrCreate()
 
-    val csvRDD = sparkSession.sparkContext.textFile("src/main/resources/TechCrunchcontinentalUSA.csv")
+    val avroDF = sparkSession.read
+      .format("com.databricks.spark.avro")
+      .load("src/main/resources/userdata1.avro");
 
-    println("Total rows are :" + csvRDD.count())
+    avroDF.show()
 
-    val withoutHeaderRDD = csvRDD.filter(line => !line.contains("permalink,company,numEmps,category,city,state,fundedDate,raisedAmt,raisedCurrency,round"))
-    println("*********************")
-    withoutHeaderRDD.foreach(println)
+    val emailDF = avroDF.select("kylosample.email")
 
+    logger.info(s"The first two rows are : ${emailDF.show(2)}")
+    print(emailDF.head)
+    logger.info(emailDF.count)
+
+    /** now create avro file from emailDF */
+    emailDF.write.format("com.databricks.spark.avro").save("src/main/resources/Avro")
   }
-
 }

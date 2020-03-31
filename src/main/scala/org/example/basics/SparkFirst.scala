@@ -1,27 +1,35 @@
 package org.example.basics
 
-import org.apache.spark.{SparkConf, SparkContext}
+import java.beans.Transient
 
-object SparkFirst { // object are kind of static class
+import org.apache.log4j.{LogManager, Logger}
+import org.apache.spark.sql.SparkSession // remember to have spark core and spark sql have same version
+
+/**
+ * This class explains the usage of sparkSession and getting the data from
+ * avro file, and creating a data frame, and then selecting one column as dataframe,
+ * and using that dataframe to create another avro file
+ */
+object SparkFirst {
+
+  @Transient lazy val logger: Logger = LogManager.getLogger("SparkSessionDemo")
 
   def main(args: Array[String]): Unit = {
-    /** Set the spark conf */
-    val sparkConf = new SparkConf()
-    sparkConf.setAppName("firstSparkApplicaiton")
-    sparkConf.setMaster("local")
 
-    /** now create the spark context */
-    val sc = new SparkContext(sparkConf)
+    val sparkSession = SparkSession.builder()
+      .appName("Spark Session Application")
+      .master("local")
+      .getOrCreate()
 
-    val intArray = Array(1,2,3,4,5,6,7,8,9,10)
-    val arrayRDD = sc.parallelize(intArray, 5) /** Setting the number of partitions */
+    val avroDF = sparkSession.read
+      .format("com.databricks.spark.avro")
+      .load("src/main/resources/output.avro");
 
-    arrayRDD.collect().foreach(println)
-    println("the size of the partitions : "+ arrayRDD.partitions.size)
+    avroDF.show()
 
-    val fileRDD = sc.textFile("src/main/resources/test.txt")
-    println("******************** fileRDD *******************")
-    fileRDD.collect().foreach(println)
+    val outputDF = avroDF.select("payload.identifier.id")
+
+    outputDF.show()
 
   }
 }
