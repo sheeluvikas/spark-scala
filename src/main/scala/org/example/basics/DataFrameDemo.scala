@@ -45,7 +45,7 @@ object DataFrameDemo {
     /************************** Read from Avro schema *******************************/
     print("*************** AVRO **************")
 
-    val schemaStream: InputStream = getClass.getClassLoader.getResourceAsStream("userData1.avsc")
+    val schemaStream: InputStream = getClass.getClassLoader.getResourceAsStream("customSchema.avsc")
     val avroSchema = new Schema.Parser().parse(schemaStream);
         val avroDF = spark.read
       .format("com.databricks.spark.avro")
@@ -56,7 +56,7 @@ object DataFrameDemo {
     avroDF.show()
 
     val countryNameDF = avroDF.select(
-      col("country").cast(StringType).as("Country Name"),
+      col("first_name").cast(StringType).as("First Name"),
       lit(null).cast(StringType).as("Name")
     )
     print(countryNameDF.show())
