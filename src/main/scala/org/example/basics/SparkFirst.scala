@@ -9,8 +9,9 @@ import org.apache.commons.lang3.StringUtils
 import org.apache.log4j.{LogManager, Logger}
 import org.apache.spark.sql.{Column, DataFrame, Row, SparkSession}
 import org.apache.spark.sql.functions._
+
 import util.control.Breaks._
-import org.apache.spark.sql.catalyst.expressions.Expression
+import org.apache.spark.sql.catalyst.expressions.{Expression, GenericRowWithSchema}
 import org.apache.spark.sql.types.{ArrayType, StringType, StructField, StructType}
 
 import scala.collection.mutable// remember to have spark core and spark sql have same version
@@ -23,25 +24,6 @@ import scala.collection.mutable// remember to have spark core and spark sql have
 object SparkFirst {
 
   @Transient lazy val logger: Logger = LogManager.getLogger("SparkSessionDemo")
-
-  def findValue(df: DataFrame, path: String): Column = {
-//    df(path).apply("context").as("Contexts")
-//    df(path).apply("value").as("values"),
-//    df.select(
-//      when(col(path).isNotNull && ,
-//      ))
-
-
-      df(path).getField("context")
-//      explode(df(path)).getField("context")
-//        .apply("context").as("context")
-//      explode(col(path)).apply("value").as("value")
-
-//    df(path)
-//  lit("hello")
-//    .
-
-  }
 
   def main(args: Array[String]): Unit = {
 
@@ -62,26 +44,50 @@ object SparkFirst {
 
     val path = "payload.alternativeIdentifiers"
 
-//    avroDF.for
     val df = avroDF.select(
       col(path),
-      findValue(col(path)).as("instrumentid")
+      findValue(col(path)).as("instrumentid"),
+      getElementConditional(col("payload.classifications"),
+        lit("schemeName"),
+        lit("Classification of financial instruments"),
+        lit("description")).as("prdsname"),
+      getElementConditional(col("payload.partyRoles"), lit("role"), lit("ISSUER"), lit("partyDetail.primaryName"))
     )
 
-       df.printSchema()
-//    df = df.withColumn("Alternatives", avroDF.col(path))
-
-    import sparkSession.implicits._
+    df.printSchema()
 
     df.show(false)
   }
 
+  def getSubsequentElements(returningPath:String, elements:Row):String = {
+    val paths = returningPath.split("\\.")
+    var value:String = ""
+    var element = elements
+    for(path <- paths){
+      if(element.getAs(path).isInstanceOf[GenericRowWithSchema]){
+        element = element.getAs(path)
+      }
+      else {
+        value = element.getAs(path)
+      }
+    }
+    value
+  }
+
+  def getElementConditional = udf((classfications: mutable.WrappedArray[Row], matchingElement:String, matchingValue:String, returningValue:String) => {
+    var value:String = ""
+      classfications.foreach(element => {
+        if(element.getAs(matchingElement).equals(matchingValue)){
+//          value = element.getAs(returningValue)
+          value = getSubsequentElements(returningValue, element)
+        }
+      })
+    value
+  })
+
   val findValue = udf((arr :mutable.WrappedArray[Row]) =>{
-//    println(arr[0])
-
     var ans:String = ""
-
-    val prioritySeq = Array[String] ( "ISIN","TICKER")
+    val prioritySeq = Array[String] ( "TICKER", "ISIN")
 
     breakable {
       for (el <- prioritySeq) {
