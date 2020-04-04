@@ -4,17 +4,14 @@ import java.beans.Transient
 import java.io.InputStream
 
 import org.apache.avro.Schema
-import org.apache.calcite.avatica.ColumnMetaData.StructType
 import org.apache.commons.lang3.StringUtils
 import org.apache.log4j.{LogManager, Logger}
-import org.apache.spark.sql.{Column, DataFrame, Row, SparkSession}
+import org.apache.spark.sql.catalyst.expressions.GenericRowWithSchema
 import org.apache.spark.sql.functions._
+import org.apache.spark.sql.{Row, SparkSession}
 
-import util.control.Breaks._
-import org.apache.spark.sql.catalyst.expressions.{Expression, GenericRowWithSchema}
-import org.apache.spark.sql.types.{ArrayType, StringType, StructField, StructType}
-
-import scala.collection.mutable// remember to have spark core and spark sql have same version
+import scala.collection.mutable
+import scala.util.control.Breaks._// remember to have spark core and spark sql have same version
 
 /**
  * This class explains the usage of sparkSession and getting the data from
