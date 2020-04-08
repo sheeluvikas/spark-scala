@@ -3,15 +3,13 @@ package org.example.basics
 import java.beans.Transient
 import java.io.InputStream
 
+import com.example.spark.utils.SparkUtils
+import com.example.spark.utils.UserDefinedFunctions._
 import org.apache.avro.Schema
-import org.apache.commons.lang3.StringUtils
 import org.apache.log4j.{LogManager, Logger}
-import org.apache.spark.sql.catalyst.expressions.GenericRowWithSchema
 import org.apache.spark.sql.functions._
-import org.apache.spark.sql.{Row, SparkSession}
 
-import scala.collection.mutable
-import scala.util.control.Breaks._// remember to have spark core and spark sql have same version
+// remember to have spark core and spark sql have same version
 
 /**
  * This class explains the usage of sparkSession and getting the data from
@@ -24,20 +22,14 @@ object SparkFirst {
 
   def main(args: Array[String]): Unit = {
 
-    val sparkSession = SparkSession.builder()
-      .appName("Spark Session Application")
-      .master("local[*]")
-      .getOrCreate()
+    val sparkSession = SparkUtils.buildSparkContext("SparkFirst")
 
     val schema: InputStream = getClass.getClassLoader.getResourceAsStream("userSchema.avsc")
     val avroSchema = new Schema.Parser().parse(schema)
 
-
     val avroDF = sparkSession.read.format("com.databricks.spark.avro")
       .option("avroSchema", avroSchema.toString())
       .load("src/main/resources/output.avro");
-
-    //    avroDF.show()
 
     val path = "payload.alternativeIdentifiers"
 
@@ -56,46 +48,5 @@ object SparkFirst {
     df.show(false)
   }
 
-  def getSubsequentElements(returningPath:String, elements:Row):String = {
-    val paths = returningPath.split("\\.")
-    var value:String = ""
-    var element = elements
-    for(path <- paths){
-      if(element.getAs(path).isInstanceOf[GenericRowWithSchema]){
-        element = element.getAs(path)
-      }
-      else {
-        value = element.getAs(path)
-      }
-    }
-    value
-  }
 
-  def getElementConditional = udf((classfications: mutable.WrappedArray[Row], matchingElement:String, matchingValue:String, returningValue:String) => {
-    var value:String = ""
-      classfications.foreach(element => {
-        if(element.getAs(matchingElement).equals(matchingValue)){
-//          value = element.getAs(returningValue)
-          value = getSubsequentElements(returningValue, element)
-        }
-      })
-    value
-  })
-
-  val findValue = udf((arr :mutable.WrappedArray[Row]) =>{
-    var ans:String = ""
-    val prioritySeq = Array[String] ( "TICKER", "ISIN")
-
-    breakable {
-      for (el <- prioritySeq) {
-        arr.foreach(x => {
-          if (StringUtils.equalsAnyIgnoreCase(x.getString(0), el)) {
-            ans = x.getString(1)
-            break
-          }
-        })
-      }
-    }
-    ans
-  })
 }
