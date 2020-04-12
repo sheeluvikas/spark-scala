@@ -53,11 +53,12 @@ object DataFrameDemo {
       .load("src/main/resources/userdata1.avro");
 
     avroDF.printSchema()
-    avroDF.show()
+    avroDF.show(50)
 
     val countryNameDF = avroDF.select(
-      col("first_name").cast(StringType).as("First Name"),
-      lit(null).cast(StringType).as("Name")
+      col("first_name").cast(StringType).as("First_Name"),
+      col("last_name").cast(StringType).as("Last_Name"),
+      col("email").as("Email_Id")
     )
     print(countryNameDF.show())
 
