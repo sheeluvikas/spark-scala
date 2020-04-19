@@ -22,6 +22,8 @@ object SparkFirst {
 
   def main(args: Array[String]): Unit = {
 
+    logger.info("********************")
+    System.out.println("*************************")
     val sparkSession = SparkUtils.buildSparkContext("SparkFirst")
 
     val schema: InputStream = getClass.getClassLoader.getResourceAsStream("userSchema.avsc")
@@ -50,3 +52,4 @@ object SparkFirst {
 
 
 }
+
