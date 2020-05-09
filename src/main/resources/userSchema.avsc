@@ -338,6 +338,31 @@
                    } ],
                    "default" : null
         },{
+                  "name" : "securitisationTranche",
+                  "type" : [ "null", {
+                    "type" : "record",
+                    "name" : "SecuritisationTranche",
+                    "fields" : [ {
+                      "name" : "securitisationDealIdentifier",
+                      "type" : [ "null", {
+                            "type" : "record",
+                            "name" : "securitisationDealIdentifier",
+                            "fields" : [{
+                                "name" : "id",
+                                "type" : ["null", "string"],
+                                "default" : null
+                                }, {
+                                 "name" : "domain",
+                                 "type" : ["null", "string"],
+                                 "default" : null
+                                }
+                            ]
+                      } ],
+                      "default" : null
+                    } ]
+                  } ],
+                  "default" : null
+        }, {
                   "name" : "loanMortgageCharacteristic",
                   "type" : [ "null", {
                     "type" : "record",
