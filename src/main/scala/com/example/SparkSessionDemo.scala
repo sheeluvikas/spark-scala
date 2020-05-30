@@ -1,9 +1,4 @@
-package org.example.basics
-
-import java.beans.Transient
-
-import org.apache.log4j.{LogManager, Logger}
-import org.apache.spark.sql.SparkSession // remember to have spark core and spark sql have same version
+package com.example
 
 /**
  * This class explains the usage of sparkSession and getting the data from

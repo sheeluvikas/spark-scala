@@ -1,7 +1,7 @@
-package org.example.basics
+package com.example
 
 import com.example.spark.utils.SparkUtils
-import org.apache.spark.sql.functions._
+import org.apache.spark.sql.functions.col
 
 object SparkApp {
 

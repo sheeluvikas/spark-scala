@@ -1,4 +1,4 @@
-package org.example.basics
+package com.example
 
 import com.example.pojo.Student
 import com.example.spark.utils.SparkUtils

@@ -1,12 +1,11 @@
-package org.example.basics
+package com.example
 
 import java.io.InputStream
 
 import org.apache.avro.Schema
-import org.apache.spark.sql.{Row, SparkSession}
+import org.apache.spark.sql.functions.col
 import org.apache.spark.sql.types.{IntegerType, StringType, StructField, StructType}
-import org.apache.spark.sql.functions.{col, lit, when}
-
+import org.apache.spark.sql.{Row, SparkSession}
 
 object DataFrameDemo {
 

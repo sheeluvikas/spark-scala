@@ -1,8 +1,0 @@
-{
-   "type" : "email",
-   "namespace" : "org.example.avro",
-   "name" : "email",
-   "fields" : [
-      { "name" : "Email" , "type" : "string" }
-   ]
-}

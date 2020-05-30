@@ -1,15 +1,13 @@
-package org.example.basics
+package com.example
 
 import java.beans.Transient
 import java.io.InputStream
 
 import com.example.spark.utils.SparkUtils
-import com.example.spark.utils.UserDefinedFunctions._
+import com.example.spark.utils.UserDefinedFunctions.{findValue, getElementConditional}
 import org.apache.avro.Schema
 import org.apache.log4j.{LogManager, Logger}
-import org.apache.spark.sql.functions._
-
-// remember to have spark core and spark sql have same version
+import org.apache.spark.sql.functions.{col, lit}
 
 /**
  * This class explains the usage of sparkSession and getting the data from
@@ -52,4 +50,3 @@ object SparkFirst {
 
 
 }
-
