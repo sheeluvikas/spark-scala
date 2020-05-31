@@ -7,7 +7,7 @@ object SparkDataset {
 
   def main(args: Array[String]): Unit = {
     /** Get the spark session */
-    val sparkSession = SparkUtils.buildSparkContext("Spark Dataset App")
+    val sparkSession = SparkUtils.buildSparkContext("Spark Dataset App", null)
 
     /** get the dataframe from the json object. */
     val df = sparkSession.read.json("src/main/resources/Student.json")

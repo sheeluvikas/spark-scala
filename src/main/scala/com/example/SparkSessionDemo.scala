@@ -5,6 +5,11 @@ package com.example
  * avro file, and creating a data frame, and then selecting one column as dataframe,
  * and using that dataframe to create another avro file
  */
+import java.beans.Transient
+
+import org.apache.log4j.{LogManager, Logger}
+import org.apache.spark.sql.SparkSession
+
 object SparkSessionDemo {
 
   @Transient lazy val logger: Logger = LogManager.getLogger("SparkSessionDemo")
