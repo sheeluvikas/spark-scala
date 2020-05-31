@@ -34,6 +34,7 @@ object SparkApp {
 
     logger.info("************* outDF Created !!!")
 
+    val q = sparkSession.catalog.listTables("default")
     SparkUtils.writeDFInParquet(sparkSession, outDF, "/app/hive/file")
 
     logger.info("******** Created the data in parquet at : /app/hive/file")
