@@ -1,5 +1,11 @@
 #!/bin/bash
 
+########################
+# Application name : Spark app
+# @Author          : Vikas
+# @git url         : git@github.com:sheeluvikas/spark-scala.git
+#
+########################
 export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
 export YARN_CONF_DIR=$HADOOP_HOME/etc/hadoop
 
