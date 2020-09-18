@@ -15,4 +15,4 @@ HIVE_FILE=/usr/local/Cellar/hive/3.1.2/libexec/conf/hive-site.xml
 --files=${HIVE_FILE} \
 --master yarn \
 --deploy-mode cluster \
---class org.example.SparkApp ${SPARK_APP_JAR}
+--class com.example.SparkApp ${SPARK_APP_JAR}

@@ -1,6 +1,6 @@
 {
    "type" : "email",
-   "namespace" : "org.example.avro",
+   "namespace" : "com.example.avro",
    "name" : "email",
    "fields" : [
       { "name" : "Email" , "type" : "string" }
