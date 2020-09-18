@@ -1,5 +1,7 @@
-package com.example.etl
+package com.example.etl.app.impl
+
 import com.example.app.SparkApp.logger
+import com.example.etl.`trait`.Loader
 import com.example.spark.utils.SparkUtils
 import org.apache.spark.sql.{DataFrame, SparkSession}
 
@@ -9,10 +11,8 @@ class AppLoader extends Loader {
 
     val inputDF = input("APP_DF")
 
-    logger.info("************* outDF Created !!!")
-
     SparkUtils.writeDFInParquet(sparkSession, inputDF, "/app/hive/file")
 
-    logger.info("******** Created the data in parquet at : /app/hive/file")
+    logger.info("Created the data in parquet at : /app/hive/file")
   }
 }

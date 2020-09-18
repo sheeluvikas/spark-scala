@@ -2,7 +2,7 @@ package com.example.app
 
 import java.beans.Transient
 
-import com.example.etl.EtlFactory
+import com.example.etl.app.impl.EtlFactory
 import com.example.spark.utils.SparkUtils
 import org.apache.log4j.{LogManager, Logger}
 import org.apache.spark.sql.DataFrame
@@ -17,10 +17,8 @@ object SparkApp {
 
   def main(args: Array[String]): Unit = {
 
-    logger.info("********** Entered the main method !!!")
     val sparkSession = SparkUtils.buildSparkContextApp("MySparkApp", null)
-    logger.info("********** Created the sparkSession !!!")
-    // read the avro file
+    logger.info("Created the sparkSession !!!")
 
     val etl = EtlFactory()
 

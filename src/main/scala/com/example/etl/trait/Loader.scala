@@ -1,4 +1,4 @@
-package com.example.etl
+package com.example.etl.`trait`
 
 import org.apache.spark.sql.{DataFrame, SparkSession}
 

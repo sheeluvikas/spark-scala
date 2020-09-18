@@ -1,4 +1,6 @@
-package com.example.etl
+package com.example.etl.app.impl
+
+import com.example.etl.`trait`.Extractor
 import org.apache.spark.sql.{DataFrame, SparkSession}
 
 class AppExtractor extends Extractor {

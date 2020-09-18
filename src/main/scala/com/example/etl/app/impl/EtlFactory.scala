@@ -1,4 +1,6 @@
-package com.example.etl
+package com.example.etl.app.impl
+
+import com.example.etl.`trait`.ETL
 
 object EtlFactory {
 
