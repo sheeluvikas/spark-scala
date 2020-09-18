@@ -7,46 +7,28 @@ read and writes the file from and to hdfs location.
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+Please find below steps to run the SparkApp in clustor or client mode.
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
+Hadoop, hive should be installed in the machine.
+MySql should be running.
+Hadoop services should be running
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
+Install the jar spark-scala-1.0-SNAPSHOT-jar-with-dependencies.jar.
+copy the script file - spark_app.sh to your location.
 
-Say what the step will be
+### Steps to run the application : 
 
+#### Step1 : running hadoop services.
 ```
-Give the example
-```
-
-And repeat
-
-```
-until finished
+$ cd /usr/local/cellar/hadoop/3.2.1/libexec/sbin
+$ ./start-all.sh
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
+# TBContinued
 ### And coding style tests
 
 Explain what these tests test and why
