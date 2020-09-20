@@ -17,7 +17,7 @@ object SparkApp {
 
   def main(args: Array[String]): Unit = {
 
-    val sparkSession = SparkUtils.buildSparkContextApp("MySparkApp", null)
+    val sparkSession = SparkUtils.buildSparkSessionApp("MySparkApp", null)
     logger.info("Created the sparkSession !!!")
 
     val etl = EtlFactory()

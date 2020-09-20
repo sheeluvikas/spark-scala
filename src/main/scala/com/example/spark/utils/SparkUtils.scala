@@ -34,7 +34,7 @@ object SparkUtils {
    * @param envMap
    * @return
    */
-  def buildSparkContextApp(appName: String, envMap: Map[String, String]): SparkSession ={
+  def buildSparkSessionApp(appName: String, envMap: Map[String, String]): SparkSession ={
 
     val sparkSession = SparkSession.builder()
       .appName(appName)

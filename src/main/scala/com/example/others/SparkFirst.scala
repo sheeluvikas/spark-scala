@@ -22,7 +22,7 @@ object SparkFirst {
 
     logger.info("********************")
     System.out.println("*************************")
-    val sparkSession = SparkUtils.buildSparkContextApp("SparkFirst", null)
+    val sparkSession = SparkUtils.buildSparkSessionApp("SparkFirst", null)
 
     val schema: InputStream = getClass.getClassLoader.getResourceAsStream("userSchema.avsc")
     val avroSchema = new Schema.Parser().parse(schema)
