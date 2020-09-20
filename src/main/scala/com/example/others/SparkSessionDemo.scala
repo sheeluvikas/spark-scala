@@ -1,10 +1,5 @@
-package com.example
+package com.example.others
 
-/**
- * This class explains the usage of sparkSession and getting the data from
- * avro file, and creating a data frame, and then selecting one column as dataframe,
- * and using that dataframe to create another avro file
- */
 import java.beans.Transient
 
 import org.apache.log4j.{LogManager, Logger}

@@ -9,7 +9,7 @@ class AppExtractor extends Extractor {
     val emailDF = sparkSession
       .read
       .format("com.databricks.spark.avro")
-      .load("/app/data/userdata1.avro")
+      .load("/app/data/")
 
     val dataFrameMap = Map.newBuilder[String, DataFrame]
     dataFrameMap .+= ("APP_DF" -> emailDF)

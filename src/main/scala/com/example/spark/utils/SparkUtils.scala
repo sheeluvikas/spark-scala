@@ -17,6 +17,19 @@ object SparkUtils {
    * The environment Map contains the variables like executor.memory, executor.instances, executor.cores,
    * driver.memory, compression codec format etc.
    *
+   * For spark-history-server :
+   * go to the SPARK_HOME directory : /usr/local/Cellar/apache-spark/2.4.4/libexec/sbin
+   * and run the spark-hisotry-server.sh
+   * but remember to create the directory : mkdir /tmp/spark-events
+   * and set the configurations done below :
+   * spark.eventLog.enabled
+   * spark.eventLog.dir
+   * spark.history.fs.logDirectory
+   *
+   * once the application is running, go to http://localhost:18080 to view the spark-history details
+   *
+   * Check here for more details : https://luminousmen.com/post/spark-history-server-and-monitoring-jobs-performance
+   *
    * @param appName
    * @param envMap
    * @return
@@ -28,6 +41,9 @@ object SparkUtils {
       .enableHiveSupport() // TODO : Learn about it
       // TODO : Put here the config properties like spark.executor.memory, cores, driver.memory etc
 //      .config("spark.executor.memory", envMap("executor.memory"))
+      .config("spark.eventLog.enabled", true)
+      .config("spark.eventLog.dir", "file:/tmp/spark-events")
+      .config("spark.history.fs.logDirectory", "file:/tmp/spark-events")
       .getOrCreate()
 
     sparkSession
