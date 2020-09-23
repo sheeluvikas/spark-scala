@@ -10,6 +10,7 @@ class AppExtractor extends Extractor {
       .read
       .format("com.databricks.spark.avro")
       .load("/app/data/")
+      .repartition(4)
 
     val dataFrameMap = Map.newBuilder[String, DataFrame]
     dataFrameMap .+= ("APP_DF" -> emailDF)

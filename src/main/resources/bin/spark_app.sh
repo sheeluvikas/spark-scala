@@ -4,6 +4,10 @@
 # Application name : Spark app
 # @Author          : Vikas
 # @git url         : git@github.com:sheeluvikas/spark-scala.git
+
+# for standalone mode :
+# --master spark://192.168.43.204:7077 \
+# to run the above standalone mode, make sure we have start-master.sh run
 #
 ########################
 export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
