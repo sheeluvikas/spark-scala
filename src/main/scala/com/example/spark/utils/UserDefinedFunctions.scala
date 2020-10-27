@@ -36,7 +36,7 @@ object UserDefinedFunctions {
     value
   })
 
-  val findValue = udf((arr :mutable.WrappedArray[Row]) =>{
+  def findValue = udf((arr :mutable.WrappedArray[Row]) =>{
     var ans:String = ""
     val prioritySeq = Array[String] ( "TICKER", "ISIN")
 
