@@ -36,6 +36,10 @@ object UserDefinedFunctions {
     value
   })
 
+  def toLowerCase = udf((value: String) => {
+    value.toLowerCase
+  })
+
   def findValue = udf((arr :mutable.WrappedArray[Row]) =>{
     var ans:String = ""
     val prioritySeq = Array[String] ( "TICKER", "ISIN")

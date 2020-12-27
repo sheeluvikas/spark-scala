@@ -4,7 +4,7 @@ import java.beans.Transient
 import java.io.InputStream
 
 import com.example.spark.utils.SparkUtils
-import com.example.spark.utils.UserDefinedFunctions.{findValue, getElementConditional}
+import com.example.spark.utils.UserDefinedFunctions.{findValue, getElementConditional, toLowerCase}
 import org.apache.avro.Schema
 import org.apache.log4j.{LogManager, Logger}
 import org.apache.spark.sql.functions.{col, lit}
@@ -20,8 +20,6 @@ object SparkFirst {
 
   def main(args: Array[String]): Unit = {
 
-    logger.info("********************")
-    System.out.println("*************************")
     val sparkSession = SparkUtils.buildSparkContext("SparkFirst", null)
 
     val schema: InputStream = getClass.getClassLoader.getResourceAsStream("userSchema.avsc")

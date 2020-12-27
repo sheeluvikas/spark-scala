@@ -18,5 +18,5 @@ HIVE_FILE=/usr/local/Cellar/hive/3.1.2/libexec/conf/hive-site.xml
 /usr/local/bin/spark-submit \
 --files=${HIVE_FILE} \
 --master yarn \
---deploy-mode cluster \
+--deploy-mode client \
 --class com.example.app.SparkApp ${SPARK_APP_JAR}
