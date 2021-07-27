@@ -18,8 +18,8 @@ object SparkUtils {
    * driver.memory, compression codec format etc.
    *
    * For spark-history-server :
-   * go to the SPARK_HOME directory : /usr/local/Cellar/apache-spark/2.4.4/libexec/sbin
-   * and run the spark-hisotry-server.sh
+   * go to the SPARK_HOME directory : /usr/local/Cellar/apache-spark/3.1.2/libexec/sbin
+   * and run the spark-history-server.sh
    * but remember to create the directory : mkdir /tmp/spark-events
    * and set the configurations done below :
    * spark.eventLog.enabled
