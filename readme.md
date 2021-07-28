@@ -7,7 +7,7 @@ read and writes the file from and to hdfs location.
 
 ## Getting Started
 
-Please find below steps to run the SparkApp in clustor or client mode.
+Please find below steps to run the SparkApp in cluster or client mode.
 
 ### Prerequisites
 
@@ -43,30 +43,36 @@ Add additional notes about how to deploy this on a live system
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
 ## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+* **Vikas Katiyar** - *Initial work* - (https://github.com/sheeluvikas)
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+#---------------------------------------------------
+### Rest equivalent to run the job in google cloud : 
+POST /v1/projects/single-nebula-319205/regions/us-central1/jobs:submit/
+{
+  "projectId": "single-nebula-319205",
+  "job": {
+    "placement": {
+      "clusterName": "cluster-27e7"
+    },
+    "statusHistory": [],
+    "reference": {
+      "jobId": "job-2eb9a59a",
+      "projectId": "single-nebula-319205"
+    },
+    "sparkJob": {
+      "mainJarFileUri": "gs://nebula_2244/libs/spark-scala-1.0-SNAPSHOT-jar-with-dependencies.jar",
+      "properties": {
+        "spark.executor.extraJavaOptions": "-DBUCKET_INPUT_PATH=gs://nebula_2244/data/ -DBUCKET_OUTPUT_PATH=gs://nebula_2244/output",
+        "spark.driver.extraJavaOptions": "-DBUCKET_INPUT_PATH=gs://nebula_2244/data/ -DBUCKET_OUTPUT_PATH=gs://nebula_2244/output"
+      }
+    }
+  }
+}
