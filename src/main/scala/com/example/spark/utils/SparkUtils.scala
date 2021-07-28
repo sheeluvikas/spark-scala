@@ -41,9 +41,9 @@ object SparkUtils {
       .enableHiveSupport() // TODO : Learn about it
       // TODO : Put here the config properties like spark.executor.memory, cores, driver.memory etc
 //      .config("spark.executor.memory", envMap("executor.memory"))
-      .config("spark.eventLog.enabled", true)
-      .config("spark.eventLog.dir", "file:/tmp/spark-events")
-      .config("spark.history.fs.logDirectory", "file:/tmp/spark-events")
+//      .config("spark.eventLog.enabled", true)
+//      .config("spark.eventLog.dir", "file:/tmp/spark-events")
+//      .config("spark.history.fs.logDirectory", "file:/tmp/spark-events")
       .getOrCreate()
 
     sparkSession
@@ -54,8 +54,7 @@ object SparkUtils {
 
     dataFrame.write
       .mode(SaveMode.Overwrite)
-      .option("path", path)
-      .saveAsTable("default.student")
+      .parquet(path)
 
     /** in order to saveAsTable work, the application must be running in cluster mode, and not client mode
      * Otherwise, the table will be created in the local by default derby database, and will not be visible

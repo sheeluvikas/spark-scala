@@ -5,12 +5,14 @@ import org.apache.spark.sql.{DataFrame, SparkSession}
 
 class AppExtractor extends Extractor {
 
-  override def extract(sparkSession: SparkSession): Map[String, DataFrame] = {
+  override def extract(sparkSession: SparkSession, envMap: Map[String, String]): Map[String, DataFrame] = {
     val emailDF = sparkSession
       .read
       .format("com.databricks.spark.avro")
-      .load("/app/data/")
+      .load(envMap("BUCKET_INPUT_PATH"))
       .repartition(4)
+
+//    "/app/data/"
 
     val dataFrameMap = Map.newBuilder[String, DataFrame]
     dataFrameMap .+= ("APP_DF" -> emailDF)

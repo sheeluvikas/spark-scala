@@ -7,12 +7,12 @@ import org.apache.spark.sql.{DataFrame, SparkSession}
 
 class AppLoader extends Loader {
 
-  override def load(sparkSession: SparkSession, input: Map[String, DataFrame]): Unit = {
+  override def load(sparkSession: SparkSession, input: Map[String, DataFrame], envMap: Map[String, String]): Unit = {
 
     val inputDF = input("APP_DF")
 
-    SparkUtils.writeDFInParquet(sparkSession, inputDF, "/app/hive/file")
+    SparkUtils.writeDFInParquet(sparkSession, inputDF, envMap("BUCKET_OUTPUT_PATH"))
 
-    logger.info("Created the data in parquet at : /app/hive/file")
+    logger.info("Created the data in parquet at : " + envMap("BUCKET_OUTPUT_PATH"))
   }
 }

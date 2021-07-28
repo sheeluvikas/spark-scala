@@ -6,9 +6,9 @@ import org.apache.spark.sql.{DataFrame, SparkSession}
 class ETLWrapper(val extractor: Extractor,
                  val transformer: Transformer,
                  val loader: Loader) extends ETL {
-  override def extract(sparkSession: SparkSession): Map[String, DataFrame] = extractor.extract(sparkSession)
+  override def extract(sparkSession: SparkSession, envMap: Map[String, String]): Map[String, DataFrame] = extractor.extract(sparkSession, envMap)
 
-  override def transform(sparkSession: SparkSession, input: Map[String, DataFrame]): Map[String, DataFrame] = transformer.transform(sparkSession, input)
+  override def transform(sparkSession: SparkSession, input: Map[String, DataFrame], envMap: Map[String, String]): Map[String, DataFrame] = transformer.transform(sparkSession, input, envMap)
 
-  override def load(sparkSession: SparkSession, input: Map[String, DataFrame]): Unit = loader.load(sparkSession, input)
+  override def load(sparkSession: SparkSession, input: Map[String, DataFrame], envMap: Map[String, String]): Unit = loader.load(sparkSession, input, envMap)
 }

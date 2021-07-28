@@ -22,11 +22,25 @@ object SparkApp {
 
     val etl = EtlFactory()
 
+    var envMap = Map.newBuilder[String, String].result()
+
+    logger.info("*******************")
+    logger.info(System.getProperty("BUCKET_INPUT_PATH"))
+    logger.info(System.getProperty("BUCKET_OUTPUT_PATH"))
+    logger.info("*******************")
+
+    envMap
+      .+=(
+        "BUCKET_INPUT_PATH" ->System.getProperty("BUCKET_INPUT_PATH"), // "/app/data/"
+        "BUCKET_OUTPUT_PATH" -> System.getProperty("BUCKET_OUTPUT_PATH")    // "/app/hive/file"
+      )
+
+
     etl match {
       case Some(i) =>
-        val extract : Map[String, DataFrame] = i.extract(sparkSession)
-        val transform : Map[String, DataFrame] = i.transform(sparkSession, extract)
-        i.load(sparkSession, transform)
+        val extract : Map[String, DataFrame] = i.extract(sparkSession, envMap)
+        val transform : Map[String, DataFrame] = i.transform(sparkSession, extract, envMap)
+        i.load(sparkSession, transform, envMap)
       case None =>
         System.exit(1)
     }

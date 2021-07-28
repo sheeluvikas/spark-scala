@@ -18,5 +18,7 @@ HIVE_FILE=/usr/local/Cellar/hive/3.1.2/libexec/conf/hive-site.xml
 /usr/local/bin/spark-submit \
 --files=${HIVE_FILE} \
 --master yarn \
---deploy-mode client \
+--conf "spark.executor.extraJavaOptions=-DBUCKET_INPUT_PATH=/app/data/ -DBUCKET_OUTPUT_PATH=/app/hive/file" \
+--conf "spark.driver.extraJavaOptions=-DBUCKET_INPUT_PATH=/app/data/ -DBUCKET_OUTPUT_PATH=/app/hive/file" \
+--deploy-mode cluster \
 --class com.example.app.SparkApp ${SPARK_APP_JAR}
