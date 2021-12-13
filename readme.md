@@ -20,6 +20,9 @@ Hadoop services should be running
 Install the jar spark-scala-1.0-SNAPSHOT-jar-with-dependencies.jar.
 copy the script file - spark_app.sh to your location.
 
+use Java version 1.8
+Use Scala version 2.12
+
 ### Steps to run the application : 
 
 #### Step1 : running hadoop services.
