@@ -1,9 +1,9 @@
 package com.example.others
 
 import java.io.InputStream
-
 import org.apache.avro.Schema
-import org.apache.spark.sql.functions.col
+import org.apache.spark.sql.expressions.Window
+import org.apache.spark.sql.functions.{col, log, rank, row_number}
 import org.apache.spark.sql.types.{IntegerType, StringType, StructField, StructType}
 import org.apache.spark.sql.{Row, SparkSession}
 
@@ -15,7 +15,7 @@ object DataFrameDemo {
       .master("local")
       .getOrCreate()
 
-    val intArray = Array(1,2,3,4,5,6,7,8)
+    val intArray = Array(1,1,2,3,4,5,6,7,8)
 
     val rdd = spark.sparkContext.parallelize(intArray)
     val schema = StructType(
@@ -27,7 +27,14 @@ object DataFrameDemo {
     var df = spark.createDataFrame(rowRDD, schema)
 
     df.printSchema()
+
+    println("***************")
     df.show()
+
+    val windowSpec = Window.partitionBy("Values").orderBy("Values")
+    df = df.withColumn("row_number", row_number.over(windowSpec))
+    df.show()
+    println("***************")
 
 
     /*df = spark.read.format("csv")
@@ -41,6 +48,9 @@ object DataFrameDemo {
     df.printSchema()
     df.show(10)
 
+    val windowSpec2 = Window.partitionBy("company").orderBy("raisedAmt")
+    df = df.withColumn("rank", rank().over(windowSpec2))
+    df.show(10)
     /************************** Read from Avro schema *******************************/
     print("*************** AVRO **************")
 
