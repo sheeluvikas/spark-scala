@@ -4,6 +4,10 @@ import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.expressions.Window
 import org.apache.spark.sql.functions.{col, countDistinct}
 
+
+/**
+ * https://towardsdatascience.com/six-spark-exercises-to-rule-them-all-242445b24565
+ */
 object SparkSqlHandson {
 
   def main(args: Array[String]): Unit = {
